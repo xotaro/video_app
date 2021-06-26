@@ -65,7 +65,7 @@ class _HomeNavigateState extends State<HomeNavigate> {
 
               activeIcon: Icon(Icons.home,color:Color(0xff0369CD)),
               icon: Icon(Icons.home),
-                label: '',
+                label: 'الرئيسيه',
 
             ),
             BottomNavigationBarItem(
