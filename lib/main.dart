@@ -3,6 +3,7 @@ import 'package:video_app/view/home_navigate.dart';
 import 'package:video_app/view/home_page.dart';
 import 'package:video_app/view/login_page.dart';
 import 'view/login_page.dart';
+import 'view/admin_navigation.dart';
 
 void main() {
   runApp(MyApp());
@@ -27,10 +28,14 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: Directionality( // add this
+
+      home:Directionality(textDirection: TextDirection.rtl,child:AdminNavigation() )
+
+       /* ( // add this
         textDirection: TextDirection.rtl, // set this property
+       // child: LoginPage(),
         child: HomeNavigate(),
-      ),
+      ),*/
     );
   }
 }
