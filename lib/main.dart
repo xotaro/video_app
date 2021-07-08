@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:video_app/view/home_navigate.dart';
+import 'package:video_app/view/home_page.dart';
 import 'package:video_app/view/login_page.dart';
+import 'view/login_page.dart';
 
 void main() {
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -23,7 +27,10 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: LoginPage(),
+      home: Directionality( // add this
+        textDirection: TextDirection.rtl, // set this property
+        child: HomeNavigate(),
+      ),
     );
   }
 }
