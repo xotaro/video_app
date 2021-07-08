@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-Widget CustomInfoCard(double right,double left, Icon icon,String title,String info){
+Widget CustomInfoCard(double right,double left, Icon icon,String title,String info,double FontSize){
   return                   Flexible(
       child:Padding(
         padding:EdgeInsets.only(right: right,left: left),
@@ -19,8 +19,8 @@ Widget CustomInfoCard(double right,double left, Icon icon,String title,String in
             title:  icon,
             subtitle: Column(
               children: [
-                Text(title,style: TextStyle(color: Colors.black,fontSize: 12),),
-                Text(info,style: TextStyle(color: Colors.black,fontSize: 12),),
+                Text(title,style: TextStyle(color: Colors.black,fontSize: FontSize,),textAlign: TextAlign.center,),
+                Text(info,style: TextStyle(color: Colors.black,fontSize: FontSize),textAlign: TextAlign.center),
               ],
             ),
           ),
