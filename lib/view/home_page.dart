@@ -53,9 +53,9 @@ class _HomePageStudentState extends State<HomePageStudent> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   mainAxisSize: MainAxisSize.max,
                   children: [
-                    CustomInfoCard(0, 24, Icon(Icons.menu_book_outlined, color: Color(0xff0369CD),), "عدد المواد:", '2'),
-                    CustomInfoCard(0, 0, Icon(Icons.videocam_sharp, color: Color(0xff0369CD)), "عدد المقاطع:", '8'),
-                    CustomInfoCard(24, 0, Icon(Icons.remove_red_eye, color: Color(0xff0369CD)), 'المشاهدات:', '12/22')
+                    CustomInfoCard(0, 24, Icon(Icons.menu_book_outlined, color: Color(0xff0369CD),), "عدد المواد:", '2',12),
+                    CustomInfoCard(0, 0, Icon(Icons.videocam_sharp, color: Color(0xff0369CD)), "عدد المقاطع:", '8',12),
+                    CustomInfoCard(24, 0, Icon(Icons.remove_red_eye, color: Color(0xff0369CD)), 'المشاهدات:', '12/22',12)
                   ],
                 ),
               ),

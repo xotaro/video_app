@@ -2,14 +2,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:video_app/view/subject_info_card.dart';
 
-class AddSubjects extends StatefulWidget {
-  const AddSubjects({Key? key}) : super(key: key);
+class AdminAddCourse extends StatefulWidget {
+  const AdminAddCourse({Key? key}) : super(key: key);
 
   @override
-  _AddSubjectsState createState() => _AddSubjectsState();
+  _AdminAddCourseState createState() => _AdminAddCourseState();
 }
 
-class _AddSubjectsState extends State<AddSubjects> {
+class _AdminAddCourseState extends State<AdminAddCourse> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,7 +18,7 @@ class _AddSubjectsState extends State<AddSubjects> {
         backgroundColor: Colors.white,
         elevation: 0,
         centerTitle: true,
-        title: Text('المواد',style: TextStyle(fontSize: 25,color: Color(0xff0369CD)),),
+        title: Text('المقاطع',style: TextStyle(fontSize: 25,color: Color(0xff0369CD)),),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -28,7 +28,7 @@ class _AddSubjectsState extends State<AddSubjects> {
             children: [
               SubjectInfo('الجبر و الهندسه الفراعيه','6/12','6'),
               SubjectInfo('الجبر و الهندسه الفراعيه','6/12','6'),
-              SubjectInfo('الجبر و الهندسه الفراعيه','6/12','6'),
+
 
 
             ],
