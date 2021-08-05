@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:video_app/di/di_config.dart';
+import 'package:video_app/view/view_models/register_vm.dart';
 
 
 
@@ -8,6 +10,21 @@ class Registration extends StatefulWidget {
 }
 
 class _RegistrationState extends State<Registration> {
+  late RegisterViewModel _registerViewModel;
+  TextEditingController nameController=TextEditingController();
+  TextEditingController phoneController=TextEditingController();
+  TextEditingController parentController=TextEditingController();
+  TextEditingController emailController=TextEditingController();
+  TextEditingController passwordController=TextEditingController();
+  TextEditingController confirmPassController=TextEditingController();
+
+  @override
+  void initState() {
+    _registerViewModel=getIt<RegisterViewModel>();
+    _registerViewModel.onRegistered.stream.listen((event) {Navigator.of(context).pop();});
+    // TODO: implement initState
+    super.initState();
+  }
   @override
   TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 16.0);
   int _count = 0;
@@ -33,6 +50,7 @@ class _RegistrationState extends State<Registration> {
       width: 330,
       height: 52,
       child: TextField(
+        controller:nameController ,
 
         textAlign: TextAlign.right,
         style: TextStyle(fontSize: 16),
@@ -53,7 +71,7 @@ class _RegistrationState extends State<Registration> {
       width: 330,
       height: 52,
       child: TextField(
-
+        controller: phoneController,
         textAlign: TextAlign.right,
         style: TextStyle(fontSize: 16),
         decoration: InputDecoration(
@@ -73,7 +91,7 @@ class _RegistrationState extends State<Registration> {
       width: 330,
       height: 52,
       child: TextField(
-
+      controller: parentController,
         textAlign: TextAlign.right,
         style: TextStyle(fontSize: 16),
         decoration: InputDecoration(
@@ -93,7 +111,7 @@ class _RegistrationState extends State<Registration> {
       width: 330,
       height: 52,
       child: TextField(
-
+        controller: emailController,
         textAlign: TextAlign.right,
         style: TextStyle(fontSize: 16),
         decoration: InputDecoration(
@@ -113,6 +131,7 @@ class _RegistrationState extends State<Registration> {
         width: 330,
         height: 52,
         child: TextField(
+          controller: passwordController,
           textAlign: TextAlign.right,
           obscureText: true,
 
@@ -137,6 +156,7 @@ class _RegistrationState extends State<Registration> {
         width: 330,
         height: 52,
         child: TextField(
+          controller: confirmPassController,
           textAlign: TextAlign.right,
           obscureText: true,
 
@@ -158,7 +178,8 @@ class _RegistrationState extends State<Registration> {
         )
     );
 
-    final registrationButton = Container(
+    final registrationButton =
+    Container(
         width: 330,
         height: 52,
         child:Material(
@@ -168,7 +189,10 @@ class _RegistrationState extends State<Registration> {
           child: MaterialButton(
             minWidth: MediaQuery.of(context).size.width,
             padding: EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 5.0),
-            onPressed: () {},
+            onPressed: () {
+              _registerViewModel.registerNew(nameController.text, phoneController.text, parentController.text,
+                  emailController.text, passwordController.text);
+            },
             child: Text("إنشاء حساب",
                 textAlign: TextAlign.center,
 
