@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:video_app/view/videos_list.dart';
 
 Widget SubjectInfo(String subjectName,String views,String videos){
   return
@@ -8,9 +9,7 @@ Column(
     Padding(
       padding: EdgeInsets.only(bottom: 23),
       child: InkWell(
-        onTap: (){
 
-        },
         child: Container(
           padding: EdgeInsets.only(top: 7),
           decoration: BoxDecoration(

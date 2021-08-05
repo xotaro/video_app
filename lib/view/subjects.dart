@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:video_app/view/subject_info_card.dart';
+import 'package:video_app/view/videos_list.dart';
 
 class Subjects extends StatefulWidget {
   const Subjects({Key? key}) : super(key: key);
@@ -26,9 +27,42 @@ class _SubjectsState extends State<Subjects> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SubjectInfo('الجبر و الهندسه الفراعيه','6/12','6'),
-              SubjectInfo('الجبر و الهندسه الفراعيه','6/12','6'),
-              SubjectInfo('الجبر و الهندسه الفراعيه','6/12','6'),
+              InkWell(
+               child: SubjectInfo('الجبر و الهندسه الفراعيه','6/12','6',),
+                onTap: (){
+
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) =>
+                        Directionality(textDirection: TextDirection.rtl, child: ListVideos())),
+                  );
+                },
+
+              ),
+              InkWell(
+                child: SubjectInfo('الجبر و الهندسه الفراعيه','6/12','6',),
+                onTap: (){
+
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) =>
+                        Directionality(textDirection: TextDirection.rtl, child: ListVideos())),
+                  );
+                },
+
+              ),
+              InkWell(
+                child: SubjectInfo('الجبر و الهندسه الفراعيه','6/12','6',),
+                onTap: (){
+
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) =>
+                        Directionality(textDirection: TextDirection.rtl, child: ListVideos())),
+                  );
+                },
+
+              ),
 
 
             ],
