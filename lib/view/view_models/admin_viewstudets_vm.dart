@@ -20,6 +20,7 @@ class ControlStudent extends ChangeNotifier{
     List st=await studentsCollection.find({'type': 'student', 'active': 'true'}).toList();
     registeredStudents = st.map((model) =>
         Student.fromJson(model)).toList();
+
     onAdded.add('done');
     notifyListeners();
   }
@@ -32,11 +33,17 @@ class ControlStudent extends ChangeNotifier{
     onAdded.add('done');
     notifyListeners();
   }
-  acceptStudent(ObjectId id){
+  acceptStudent(ObjectId id,String date,String startChosen){
     Db _db=_database.db;
     DbCollection studentsCollection=_db.collection('Students');
     studentsCollection.updateOne({
       '_id': id,},modify.set('active', 'true')) ;
+    studentsCollection.updateOne({
+      '_id': id,},modify.set('end_date', date)) ;
+    if(startChosen!='not Chosen'){
+      studentsCollection.updateOne({
+        '_id': id,},modify.set('start_date', startChosen)) ;
+    }
     notifyListeners();
 
   }

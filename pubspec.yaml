@@ -38,6 +38,8 @@ dependencies:
   youtube_player_flutter: ^8.0.0
   provider: ^5.0.0
   video_player: ^2.1.12
+  shared_preferences: ^2.0.6
+  rxdart: ^0.27.1
 
 dev_dependencies:
   flutter_test:

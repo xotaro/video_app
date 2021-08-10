@@ -9,12 +9,13 @@ class AddVideoViewModel{
   Database _database;
   StreamController onAdded = StreamController();
   AddVideoViewModel(this._database);
-  addNew(String subjectName,String unitName,String lessonName,String link){
+  addNew(String subjectName,String unitName,String lessonName,String link,int grade){
     Db _db=_database.db;
     DbCollection videosCollection=_db.collection('videos');
-    videosCollection.insertOne({'subjectName': '$subjectName', 'unitName': '$unitName', 'lessonName': '$lessonName',
-      'link': '$link'
-
+    List<String> now =DateTime.now().toString().split(' ');
+    DateTime downloaded=DateTime.parse(now[0]).add(Duration(hours: 2));
+    videosCollection.insertOne({'subjectName': '$subjectName', 'unitName': '$unitName',
+      'lessonName': '$lessonName', 'link': '$link','grade':grade,'downloaded':downloaded
     });
     onAdded.add('done');
   }

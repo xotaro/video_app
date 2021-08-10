@@ -16,17 +16,20 @@ class _AddingVideoState extends State<AddingVideo> {
   void initState() {
   _addVideoViewModel=getIt<AddVideoViewModel>();
   _addVideoViewModel.onAdded.stream.listen((event) {
+
     Navigator.of(context).pop();
   });
     // TODO: implement initState
     super.initState();
   }
+  int _value=1;
+  TextEditingController subjectNameController=TextEditingController();
+  TextEditingController unitController=TextEditingController();
+  TextEditingController lessonController=TextEditingController();
+  TextEditingController linkController=TextEditingController();
   @override
   Widget build(BuildContext context) {
-    TextEditingController subjectNameController=TextEditingController();
-    TextEditingController unitController=TextEditingController();
-    TextEditingController lessonController=TextEditingController();
-    TextEditingController linkController=TextEditingController();
+
 
     TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 16.0);
 
@@ -129,6 +132,28 @@ class _AddingVideoState extends State<AddingVideo> {
                   ),
                 ),
               ),
+        Padding(padding: EdgeInsets.only(top: 10),
+        child: DropdownButton(
+
+          value: _value,
+          items: [
+            DropdownMenuItem(
+              child: Text("الصف الثاني الثانوي"),
+              value: 1,
+            ),
+            DropdownMenuItem(
+              child: Text("الصف الثالث الثانوي"),
+              value: 2,
+            )
+          ],
+
+          onChanged: (x) {
+            setState(() {
+              _value = x as int ;
+            });
+          },
+        ),
+        ),
         Padding(
           padding: const EdgeInsets.only(top: 20),
           child: Container(
@@ -143,7 +168,7 @@ class _AddingVideoState extends State<AddingVideo> {
                   padding: EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 5.0),
                   onPressed: () {
                     _addVideoViewModel.addNew(subjectNameController.text, unitController.text, lessonController.text,
-                        linkController.text);
+                        linkController.text,_value);
                   },
                   child: Text("اضافه فيديو",
                       textAlign: TextAlign.center,

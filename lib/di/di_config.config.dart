@@ -10,10 +10,14 @@ import 'package:mongo_dart/mongo_dart.dart' as _i4;
 
 import '../core/client.dart' as _i3;
 import '../view/view_models/adding_video_vm.dart' as _i10;
-import '../view/view_models/admin_viewstudets_vm.dart' as _i9;
+import '../view/view_models/admin_control_vm.dart' as _i13;
+import '../view/view_models/admin_viewstudets_vm.dart' as _i12;
+import '../view/view_models/content_viewer_vm.dart' as _i11;
 import '../view/view_models/load_videos_vm.dart' as _i5;
 import '../view/view_models/login_vm.dart' as _i7;
+import '../view/view_models/profile_vm.dart' as _i14;
 import '../view/view_models/register_vm.dart' as _i8;
+import '../view/view_models/student_content_viewer.dart' as _i9;
 import 'mongo.dart' as _i6; // ignore_for_file: unnecessary_lambdas
 
 // ignore_for_file: lines_longer_than_80_chars
@@ -27,9 +31,17 @@ _i1.GetIt $initGetIt(_i1.GetIt get,
   gh.factory<_i7.LoginViewModel>(() => _i7.LoginViewModel(get<_i6.Database>()));
   gh.factory<_i8.RegisterViewModel>(
       () => _i8.RegisterViewModel(get<_i6.Database>()));
-  gh.factory<_i9.ControlStudent>(() => _i9.ControlStudent(get<_i6.Database>()));
+  gh.factory<_i9.StudentContentViewerViewModel>(
+      () => _i9.StudentContentViewerViewModel(get<_i6.Database>()));
   gh.factory<_i10.AddVideoViewModel>(
       () => _i10.AddVideoViewModel(get<_i6.Database>()));
+  gh.factory<_i11.AdminContentViewerViewModel>(
+      () => _i11.AdminContentViewerViewModel(get<_i6.Database>()));
+  gh.factory<_i12.ControlStudent>(
+      () => _i12.ControlStudent(get<_i6.Database>()));
+  gh.factory<_i13.ControlStudentViewModel>(
+      () => _i13.ControlStudentViewModel(get<_i6.Database>()));
   gh.singleton<_i6.Database>(_i6.Database());
+  gh.singleton<_i14.ProfileViewModel>(_i14.ProfileViewModel());
   return get;
 }

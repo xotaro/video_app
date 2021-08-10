@@ -9,7 +9,13 @@ class Student{
   String password;
   String active;
   String type;
-  Student(this.id,this.name,this.phone,this.parent,this.password,this.email,this.active,this.type);
+  String startDate;
+  String endDate;
+
+  int grade;
+  Student(this.id,this.name,this.phone,this.parent,
+      this.password,this.email,this.active,
+      this.type,this.startDate,this.endDate,this.grade);
   Student.fromJson(Map json)
       : id = json['_id'],
         name = json['name'],
@@ -18,10 +24,25 @@ class Student{
         email = json['email'],
         password = json['password'],
         active = json['active'],
-        type = json['type']
-
-
-
+        type = json['type'],
+        startDate=json['start_date'],
+        endDate=json['end_date'],
+        grade = json['grade']
   ;
+  Map<dynamic, dynamic> toJSON() {
+    return <dynamic, dynamic>{
+      '_id': id ,
+      'name':name,
+      'phone_number': phone,
+      'parent_number': parent,
+      'email': email,
+      'password': password,
+      'active':active,
+      'type':type,
+      'start_date':startDate,
+      'end_date':endDate,
+      'grade': grade,
+    };
+  }
 
 }

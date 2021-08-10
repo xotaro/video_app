@@ -1,5 +1,5 @@
 class SubjectContent{
-  List id;
+  String id;
   int total;
   int totalWatched;
 

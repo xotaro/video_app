@@ -24,6 +24,7 @@ class _AdminAddCourseState extends State<AdminAddCourse> {
   }
   @override
   Widget build(BuildContext context) {
+    _loadVideosViewModel.loadContent();
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -42,7 +43,7 @@ class _AdminAddCourseState extends State<AdminAddCourse> {
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children:
-                    _loadVideosViewModel.contents.map((e) => SubjectInfo(e.id[0], '${e.totalWatched}', '${e.total}')).toList()
+                    _loadVideosViewModel.adminContents.map((e) => SubjectInfo(e.id, '${e.totalWatched}', '${e.total}')).toList()
 
                 ),
               );
