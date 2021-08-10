@@ -30,7 +30,7 @@ Widget SubjectCard(String path,String title,Widget subtitle){
             child: ListTile(
                 contentPadding: EdgeInsets.only(right: 23),
                 isThreeLine: true,
-                title: Text(title,style: TextStyle(color: Colors.black,fontSize: 14),),
+                title: Text(title,style: TextStyle(color: Colors.black,fontSize: 14),overflow: TextOverflow.ellipsis),
                 subtitle: subtitle
             ),
           )

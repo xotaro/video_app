@@ -1,7 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:video_app/di/di_config.dart';
+import 'package:video_app/view/admin_navigation.dart';
 import 'package:video_app/view/registration.dart';
 import 'package:video_app/view/home_navigate.dart';
+import 'package:video_app/view/view_models/login_vm.dart';
 
 
 class LoginPage extends StatefulWidget {
@@ -12,12 +15,51 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  late LoginViewModel _loginViewModel;
+  TextEditingController phoneController=TextEditingController();
+  TextEditingController passwordController=TextEditingController();
   @override
+  void initState() {
+    _loginViewModel=getIt<LoginViewModel>();
+    _loginViewModel.onLogged.stream.listen((event) {Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) =>
+          Directionality(textDirection: TextDirection.rtl, child: HomeNavigate())),
+    );});
+    _loginViewModel.onLoggedAdmin.stream.listen((event) {Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) =>
+          Directionality(textDirection: TextDirection.rtl, child: AdminNavigation())),
+    );});
+    _loginViewModel.onLoggedError.stream.listen((event) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('خطا في الدخول',textAlign: TextAlign.right,),
+            content: const Text('لقد انتهت مده التسجيل او خطا في البريد او كلمه السر',textAlign: TextAlign.right,),
+            actions: [
+              TextButton(
+                child: Text('حسنا'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
+    });
+    // TODO: implement initState
+    super.initState();
+  }
+
   TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 16.0);
   int _count = 0;
   bool isChecked = false;
   final cGray = const Color(0xFFC4C4C4);
   final cBlue = const Color(0xFF0369CD);
+
 
 
   Widget build(BuildContext context) {
@@ -37,7 +79,7 @@ class _LoginPageState extends State<LoginPage> {
       width: 330,
       height: 52,
       child: TextField(
-
+controller: phoneController,
         textAlign: TextAlign.right,
         style: TextStyle(fontSize: 16),
         decoration: InputDecoration(
@@ -57,6 +99,7 @@ class _LoginPageState extends State<LoginPage> {
         width: 330,
         height: 52,
         child: TextField(
+          controller: passwordController,
           textAlign: TextAlign.right,
           obscureText: true,
 
@@ -91,11 +134,7 @@ class _LoginPageState extends State<LoginPage> {
             padding: EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 5.0),
             onPressed: () {
 
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) =>
-                    Directionality(textDirection: TextDirection.rtl, child: HomeNavigate())),
-              );
+              _loginViewModel.login(phoneController.text, passwordController.text);
             },
             child: Text("تسجيل الدخول",
                 textAlign: TextAlign.center,
@@ -118,7 +157,23 @@ class _LoginPageState extends State<LoginPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Padding(
-                    padding: EdgeInsets.fromLTRB(10, 300, 10, 12.5),
+                      padding: EdgeInsets.fromLTRB(134, 100, 129, 0),
+                      child: Text(
+                        'تسجيل الدخول',
+                        style: TextStyle(color: Color(0xff0369CD),fontSize: 25),
+                      )
+                  ),
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(127, 32, 126, 69),
+                    child: Hero(
+                      tag: 'logo',
+                      child: Image.asset(
+                          'assets/logo.png'
+                  ),
+                    )
+                  ),
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(10, 0, 10, 12.5),
                     child: Container(
                       child:emailField ,
                       decoration: BoxDecoration(
@@ -152,59 +207,11 @@ class _LoginPageState extends State<LoginPage> {
                   // Padding(
                   // padding: EdgeInsets.fromLTRB(10, 0, 10, 15),
                   // child:
-            Row(
-
-
-                    children: [
-
-                      Padding(padding: EdgeInsets.fromLTRB(30, 0, 0, 0),
-                        child: Container(
-                            width: 36,
-                            child: Checkbox(
-
-                              shape: CircleBorder(),
-                              checkColor: Colors.white,
-                              fillColor: MaterialStateProperty.resolveWith(getColor),
-                              value: isChecked,
-                              onChanged: (bool? value) {
-                                setState(() {
-                                  isChecked = value!;
-                                });
-                              },
-                            )
-                        ),
-                      ),
-
-
-                      Container(
-                          alignment: Alignment.centerRight,
-                          child:Text("حفظ تسجيل الدخول")
-
-                      ),
-                      Padding(padding: EdgeInsets.fromLTRB(80, 0, 25, 0),
-                        child:  Container(
-                          child: TextButton(
-                            style: TextButton.styleFrom(
-                              splashFactory: NoSplash.splashFactory,
-
-                              textStyle: const TextStyle(fontSize: 14),
-                            ),
-
-                            onPressed: () {},
-                            child: const Text('هل نسيت كلمة السر؟'),
-                          ),
-                        ),
-                      )
-
-
-
-                    ],
-                  ),
 
 
                   // ),
 
-                  Padding(padding: EdgeInsets.fromLTRB(10, 15, 10, 10),
+                  Padding(padding: EdgeInsets.fromLTRB(10, 50, 10, 10),
                     child: Container(
 
                       child: loginButton,

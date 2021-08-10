@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:video_app/di/di_config.dart';
+import 'package:video_app/view/view_models/register_vm.dart';
 
 
 
@@ -8,6 +10,20 @@ class Registration extends StatefulWidget {
 }
 
 class _RegistrationState extends State<Registration> {
+  late RegisterViewModel _registerViewModel;
+  TextEditingController nameController=TextEditingController();
+  TextEditingController phoneController=TextEditingController();
+  TextEditingController parentController=TextEditingController();
+  TextEditingController emailController=TextEditingController();
+  TextEditingController passwordController=TextEditingController();
+  TextEditingController confirmPassController=TextEditingController();
+  @override
+  void initState() {
+    _registerViewModel=getIt<RegisterViewModel>();
+    _registerViewModel.onRegistered.stream.listen((event) {Navigator.of(context).pop();});
+    // TODO: implement initState
+    super.initState();
+  }
   @override
   TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 16.0);
   int _count = 0;
@@ -15,7 +31,15 @@ class _RegistrationState extends State<Registration> {
   final cGray = const Color(0xFFC4C4C4);
   final cBlue = const Color(0xFF0369CD);
   final String Pen = 'assets/Edit.svg';
-
+  bool appear=false;
+  bool appear2=false;
+  bool isValidEmail(String s) {
+    return RegExp(
+        r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
+        .hasMatch(s);
+  }
+  bool validMail=true;
+  int _value=1;
   Widget build(BuildContext context) {
 
     Color getColor(Set<MaterialState> states) {
@@ -33,7 +57,8 @@ class _RegistrationState extends State<Registration> {
       width: 330,
       height: 52,
       child: TextField(
-
+        keyboardType: TextInputType.name,
+        controller:nameController ,
         textAlign: TextAlign.right,
         style: TextStyle(fontSize: 16),
         decoration: InputDecoration(
@@ -49,11 +74,13 @@ class _RegistrationState extends State<Registration> {
         ),
       ),
     );
+
     final phoneNumber =Container(
       width: 330,
       height: 52,
       child: TextField(
-
+        keyboardType: TextInputType.phone,
+        controller: phoneController,
         textAlign: TextAlign.right,
         style: TextStyle(fontSize: 16),
         decoration: InputDecoration(
@@ -73,7 +100,8 @@ class _RegistrationState extends State<Registration> {
       width: 330,
       height: 52,
       child: TextField(
-
+        keyboardType: TextInputType.phone,
+        controller: parentController,
         textAlign: TextAlign.right,
         style: TextStyle(fontSize: 16),
         decoration: InputDecoration(
@@ -92,11 +120,20 @@ class _RegistrationState extends State<Registration> {
     final emailField =Container(
       width: 330,
       height: 52,
-      child: TextField(
-
+      child: TextFormField(
+        keyboardType: TextInputType.emailAddress,
+        controller: emailController,
+        onChanged: (s) {
+          if(s.isEmpty){
+            validMail=true;
+          }else{
+            validMail=isValidEmail(s);
+          }
+        },
         textAlign: TextAlign.right,
         style: TextStyle(fontSize: 16),
         decoration: InputDecoration(
+          errorText: validMail?null:'يرجى التاكد من البريد الإلكتروني' ,
             fillColor: cGray,
             filled: true,
             suffixIcon: Icon(Icons.email,color: cBlue),
@@ -113,6 +150,7 @@ class _RegistrationState extends State<Registration> {
         width: 330,
         height: 52,
         child: TextField(
+          controller: passwordController,
           textAlign: TextAlign.right,
           obscureText: true,
 
@@ -137,6 +175,7 @@ class _RegistrationState extends State<Registration> {
         width: 330,
         height: 52,
         child: TextField(
+          controller: confirmPassController,
           textAlign: TextAlign.right,
           obscureText: true,
 
@@ -158,7 +197,8 @@ class _RegistrationState extends State<Registration> {
         )
     );
 
-    final registrationButton = Container(
+    final registrationButton =
+    Container(
         width: 330,
         height: 52,
         child:Material(
@@ -168,7 +208,30 @@ class _RegistrationState extends State<Registration> {
           child: MaterialButton(
             minWidth: MediaQuery.of(context).size.width,
             padding: EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 5.0),
-            onPressed: () {},
+            onPressed: () {
+
+              if (nameController.text.isEmpty || phoneController.text.isEmpty || parentController.text.isEmpty||
+              emailController.text.isEmpty || passwordController.text.isEmpty ||confirmPassController.text.isEmpty||validMail==false){
+                setState(() {
+                  appear =true;
+
+                });
+              }else if(passwordController.text!=confirmPassController.text){
+                setState(() {
+                  appear2=true;
+
+                });
+              }else{
+                setState(() {
+                  appear=false;
+                  appear2=false;
+                });
+
+                _registerViewModel.registerNew(nameController.text, phoneController.text, parentController.text,
+                    emailController.text, passwordController.text,_value);
+              }
+
+            },
             child: Text("إنشاء حساب",
                 textAlign: TextAlign.center,
 
@@ -201,7 +264,8 @@ class _RegistrationState extends State<Registration> {
 
                               )]
                           ),
-                        ))
+                        )
+                    )
 
                     , Padding(padding: EdgeInsets.all(5),
 
@@ -245,6 +309,7 @@ class _RegistrationState extends State<Registration> {
                               )]
                           ),
                         ))
+
                     ,Padding(padding: EdgeInsets.all(5),
 
                         child : Container(
@@ -275,7 +340,33 @@ class _RegistrationState extends State<Registration> {
                               )]
                           ),
                         )),
-                    Padding(padding: EdgeInsets.fromLTRB(5,50,5,10),
+
+                    Padding(padding: EdgeInsets.fromLTRB(5, 0, 30, 5),
+                      child: Align(
+                        alignment: Alignment.centerRight,
+                        child: DropdownButton(
+
+                          value: _value,
+                          items: [
+                            DropdownMenuItem(
+                              child: Text("الصف الثاني الثانوي"),
+                              value: 1,
+                            ),
+                            DropdownMenuItem(
+                              child: Text("الصف الثالث الثانوي"),
+                              value: 2,
+                            )
+                          ],
+
+                          onChanged: (x) {
+                            setState(() {
+                              _value = x as int ;
+                            });
+                          },
+                        ),
+                      ),
+                    ),
+                    Padding(padding: EdgeInsets.fromLTRB(5,40,5,10),
 
                       child :
 
@@ -284,7 +375,11 @@ class _RegistrationState extends State<Registration> {
                       Container(
 
                         child: registrationButton,
-                      ),)
+                      ),
+                    ),
+                    appear?Text('يرجى ملئ جميع البيانات',style: TextStyle(color: Colors.red,fontSize: 15),):Text(''),
+                    appear2?Text('الرقم السري غير مطابق',style: TextStyle(color: Colors.red,fontSize: 15),):Text(''),
+
 
 
                   ]

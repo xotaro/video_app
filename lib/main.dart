@@ -1,11 +1,14 @@
-import 'package:flutter/material.dart';
-import 'package:video_app/view/home_navigate.dart';
-import 'package:video_app/view/home_page.dart';
-import 'package:video_app/view/login_page.dart';
-import 'view/login_page.dart';
-import 'view/admin_navigation.dart';
 
-void main() {
+import 'package:flutter/material.dart';
+
+import 'package:video_app/view/splash_screen.dart';
+import 'di/di_config.dart';
+
+
+void main() async {
+  configureDependencies();
+
+
   runApp(MyApp());
 }
 
@@ -29,7 +32,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
 
-      home:Directionality(textDirection: TextDirection.rtl,child:AdminNavigation() )
+      home:Directionality(textDirection: TextDirection.rtl,child:SplashScreen() )
 
        /* ( // add this
         textDirection: TextDirection.rtl, // set this property

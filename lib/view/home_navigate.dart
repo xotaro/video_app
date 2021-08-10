@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:video_app/view/add_subject.dart';
 import 'package:video_app/view/home_page.dart';
 import 'package:video_app/view/profile.dart';
 import 'package:video_app/view/subjects.dart';
@@ -17,7 +16,6 @@ class _HomeNavigateState extends State<HomeNavigate> {
   int _currentIndex = 0;
   final List<Widget> _children = [
     HomePageStudent(),
-    AddSubjects(),
     Subjects(),
     Profile(),
 
@@ -67,13 +65,6 @@ class _HomeNavigateState extends State<HomeNavigate> {
               icon: Icon(Icons.home),
                 label: 'الرئيسيه',
 
-            ),
-            BottomNavigationBarItem(
-
-                activeIcon:Icon(Icons.note_add_rounded,color: Color(0xff0369CD),),
-
-                icon: Icon(Icons.note_add_rounded),
-                label: 'اضافه مواد'
             ),
             BottomNavigationBarItem(
                 activeIcon:Icon(Icons.book,color: Color(0xff0369CD),),
