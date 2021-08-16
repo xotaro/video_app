@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:video_app/di/di_config.dart';
 import 'package:video_app/view/adding_video_screen.dart';
+import 'package:video_app/view/admin_control_video.dart';
 import 'package:video_app/view/subject_info_card.dart';
 import 'package:video_app/view/view_models/load_videos_vm.dart';
 
@@ -40,10 +41,32 @@ class _AdminAddCourseState extends State<AdminAddCourse> {
             builder: (context, value, child) {
              return Padding(
                 padding: EdgeInsets.only(left: 26,right: 27,top: 10),
-                child: Column(
+                child: _loadVideosViewModel.adminContents.isEmpty?
+                Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      CircularProgressIndicator(),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      LinearProgressIndicator(),
+                    ],
+                  ),
+                ):
+                Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children:
-                    _loadVideosViewModel.adminContents.map((e) => SubjectInfo(e.id, '${e.totalWatched}', '${e.total}')).toList()
+                    _loadVideosViewModel.adminContents.map((e) => InkWell(
+                      onTap: (){
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) =>
+                              Directionality(textDirection: TextDirection.rtl, child:                         AdminVideoControl(subject: e.id,)
+                              )),
+                        );
+                      },
+                        child: SubjectInfo(e.id, '${e.totalWatched}', '${e.total}'))).toList()
 
                 ),
               );

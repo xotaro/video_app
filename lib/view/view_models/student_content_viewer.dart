@@ -16,17 +16,15 @@ import 'package:video_app/models/video.dart';
 @injectable
 class StudentContentViewerViewModel extends ChangeNotifier{
   Database _database;
-  int videoNumber=0;int inactive=0;int subjects=0;
+  int videoNumber=0;int inactive=0;
   List<Video> latest=[];
   StudentContentViewerViewModel(this._database);
-  loadAStudentContent(int grade) async {
+  loadAStudentContent(int grade,List subjects) async {
     Db _db=_database.db;
-    DbCollection studentCollection=_db.collection('Students');
     DbCollection videosCollection=_db.collection('videos');
 
-    videoNumber=await videosCollection.count({'grade':grade});
-    videosCollection.distinct('subjectName',{'grade':grade}).then((value) => subjects=value['values'].length);
-    List vs=await videosCollection.modernFind(filter:{'grade':grade},sort: {'downloaded':-1}).toList();
+    videoNumber=await videosCollection.count(where.oneFrom('subjectName', subjects ).and(where.eq('grade', grade)).map['\$query']);
+    List vs=await videosCollection.modernFind(selector: where.oneFrom('subjectName', subjects ).and(where.eq('grade', grade)),sort: {'downloaded':-1}).toList();
     List<Video> vid=vs.map((model) =>
         Video.fromJson(model)).toList();
 

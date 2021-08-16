@@ -15,7 +15,7 @@ class AddVideoViewModel{
     List<String> now =DateTime.now().toString().split(' ');
     DateTime downloaded=DateTime.parse(now[0]).add(Duration(hours: 2));
     videosCollection.insertOne({'subjectName': '$subjectName', 'unitName': '$unitName',
-      'lessonName': '$lessonName', 'link': '$link','grade':grade,'downloaded':downloaded
+      'lessonName': '$lessonName', 'link': '$link','grade':2,'downloaded':downloaded
     });
     onAdded.add('done');
   }

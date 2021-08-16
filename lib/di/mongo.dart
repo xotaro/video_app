@@ -7,6 +7,7 @@ import 'package:mongo_dart/mongo_dart.dart';
 @singleton
 class Database {
   StreamController dbReady = StreamController();
+  StreamController dbErrorSocket = StreamController();
 
   Db db=new Db('');
   Database() {
@@ -16,7 +17,10 @@ class Database {
           db=value;
           db.open();
           dbReady.add('event');
-          print('connected');
+    }).catchError((e){
+      if(e.runtimeType.toString()=='SocketException'){
+        dbErrorSocket.add('e');
+      }
     });
 
   }

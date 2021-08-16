@@ -11,11 +11,12 @@ class Student{
   String type;
   String startDate;
   String endDate;
+  List<dynamic> subjects;
 
   int grade;
   Student(this.id,this.name,this.phone,this.parent,
       this.password,this.email,this.active,
-      this.type,this.startDate,this.endDate,this.grade);
+      this.type,this.startDate,this.endDate,this.grade,this.subjects);
   Student.fromJson(Map json)
       : id = json['_id'],
         name = json['name'],
@@ -27,7 +28,8 @@ class Student{
         type = json['type'],
         startDate=json['start_date'],
         endDate=json['end_date'],
-        grade = json['grade']
+        grade = json['grade'],
+        subjects=json['subjects']
   ;
   Map<dynamic, dynamic> toJSON() {
     return <dynamic, dynamic>{
@@ -42,6 +44,7 @@ class Student{
       'start_date':startDate,
       'end_date':endDate,
       'grade': grade,
+      'subjects':subjects
     };
   }
 

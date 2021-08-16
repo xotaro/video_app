@@ -26,7 +26,6 @@ class LoadVideosViewModel extends ChangeNotifier{
     Db _db=_database.db;
     DbCollection videosCollection=_db.collection('videos');
     List st=await videosCollection.find({'subjectName': '$subjectName', 'grade': grade,}).toList();
-
     List<Video> beforeFilter = st.map((model) =>
         Video.fromJson(model)).toList();
     DateTime startTime=DateTime.parse(start);
@@ -41,6 +40,8 @@ class LoadVideosViewModel extends ChangeNotifier{
   loadContent() async {
     Db _db=_database.db;
     DbCollection videosCollection=_db.collection('videos');
+    DbCollection vd_st=_db.collection('st_vide');
+
     final pipeline=AggregationPipelineBuilder().addStage(
         Group(
             id: Field('subjectName'),
@@ -52,47 +53,15 @@ class LoadVideosViewModel extends ChangeNotifier{
             }
 
         )
-    ).build();
-    List result=await videosCollection.aggregateToStream(pipeline).toList();
-    adminContents = result.map((model) =>
-        SubjectContent.fromJson(model)).toList();
-
-
-    notifyListeners();
-  }
-  loadStudentContent(int grade,ObjectId student) async {
-    Db _db=_database.db;
-    DbCollection videosCollection=_db.collection('videos');
-    DbCollection vd_st=_db.collection('st_vide');
-    final pipeline=AggregationPipelineBuilder().addStage(
-        Match(
-            {'grade':grade}
-        )
-    ).addStage(
-        Group(
-            id: Field('subjectName'),
-
-            fields: {
-              'total': Sum(1),
-              'totalWatched': Sum(Field('watched'))
-
-            }
-
-        )
-
     ).addStage(
         Sort(
-      {
-        '_id':-1
+            {
+              '_id':-1
 
-      }
-    )
+            }
+        )
     ).build();
     final pipeline2=AggregationPipelineBuilder().addStage(
-      Match(
-          {'student':student}
-      )
-    ).addStage(
         Group(
             id: Field('subjectName'),
 
@@ -116,8 +85,10 @@ class LoadVideosViewModel extends ChangeNotifier{
 
 
     List result=await videosCollection.aggregateToStream(pipeline).toList();
-    List<SubjectContent> modify=result.map((e) => SubjectContent.fromJson(e)
-      ).toList();
+
+    List<SubjectContent> modify = result.map((model) =>
+        SubjectContent.fromJson(model)).toList();
+
     List result2=await vd_st.aggregateToStream(pipeline2).toList();
 
     List<SubjectContent> modify2=result2.map((e) => SubjectContent.fromJson(e)
@@ -125,15 +96,91 @@ class LoadVideosViewModel extends ChangeNotifier{
     List<SubjectContent> finale=[];
 
     modify.forEach((element) async {
-     int index=modify.indexOf(element );
-      if(index<modify2.length){
+        modify2.forEach((element2) {
+          if(element.id==element2.id){
+            element.totalWatched=element2.totalWatched;
+          }
+        });
+        finale.add(element);
 
-        element.totalWatched=modify2[index].totalWatched;
-        finale.add(element );
-      }else{
-        finale.add(element );
-      }
     });
+    adminContents=finale;
+    notifyListeners();
+  }
+  loadStudentContent(int grade,List subjects,ObjectId student) async {
+    Db _db=_database.db;
+    DbCollection videosCollection=_db.collection('videos');
+    DbCollection vd_st=_db.collection('st_vide');
+    List<SubjectContent> finale=[];
+
+      final pipeline=AggregationPipelineBuilder().addStage(
+          Match(
+              (where.oneFrom('subjectName', subjects ).map['\$query'])
+          )
+      ).addStage(
+          Group(
+              id: Field('subjectName'),
+              fields: {
+                'total': Sum(1),
+                'totalWatched': Sum(Field('watched'))
+
+              }
+
+          )
+
+      ).addStage(
+          Sort(
+              {
+                '_id':-1
+
+              }
+          )
+      ).build();
+      final pipeline2=AggregationPipelineBuilder().addStage(
+          Match(
+              {'student':student}
+          )
+      ).addStage(
+          Group(
+              id: Field('subjectName'),
+
+              fields: {
+                'total': Sum(1),
+                'totalWatched': Sum(Field('watched'))
+
+              }
+
+          )
+
+      ).addStage(
+          Sort(
+              {
+                '_id':-1
+
+              }
+          )
+      )
+          .build();
+
+      List result=await videosCollection.aggregateToStream(pipeline).toList();
+      List<SubjectContent> modify=result.map((e) => SubjectContent.fromJson(e)
+      ).toList();
+      List result2=await vd_st.aggregateToStream(pipeline2).toList();
+
+      List<SubjectContent> modify2=result2.map((e) => SubjectContent.fromJson(e)
+      ).toList();
+
+
+      modify.forEach((element) async {
+        int index=modify.indexOf(element );
+        if(index<modify2.length){
+          element.totalWatched=modify2[index].totalWatched;
+          finale.add(element );
+        }else{
+          finale.add(element );
+        }
+      });
+
 
     studentContents=finale;
     notifyListeners();

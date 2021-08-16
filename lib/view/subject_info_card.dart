@@ -39,6 +39,7 @@ Column(
     Padding(padding: EdgeInsets.only(bottom: 25),
       child: Wrap(
         direction: Axis.horizontal,
+        runSpacing: 10,
         spacing: 42,
         children: [
           Chip(

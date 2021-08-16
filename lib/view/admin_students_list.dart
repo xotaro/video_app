@@ -43,7 +43,13 @@ class _StudentsListState extends State<StudentsList> {
                 builder: (context, value, child) {
                   List<Student> st=_controlStudent.registeredStudents;
                   int i = 1;
-                  return
+                  return st.isEmpty?Center(
+                    child:
+                        CircularProgressIndicator()
+
+
+
+                  ):
                     DataTable(
                       columnSpacing: 30,
                       columns: [
