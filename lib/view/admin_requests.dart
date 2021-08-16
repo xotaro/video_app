@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_material_pickers/helpers/show_checkbox_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:video_app/di/di_config.dart';
 import 'package:video_app/view/view_models/admin_viewstudets_vm.dart';
@@ -15,6 +16,7 @@ class Requests extends StatefulWidget {
 class _RequestsState extends State<Requests> {
   late ControlStudent _controlStudent;
   String startChosen='not Chosen';
+  List<String> subjects=[];
   @override
   void initState() {
     _controlStudent=getIt<ControlStudent>();
@@ -55,6 +57,10 @@ class _RequestsState extends State<Requests> {
                     ),
                     DataColumn(label: Text(
                         'تاريخ الطلب',
+                        style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold)
+                    )),
+                    DataColumn(label: Text(
+                        'المواد',
                         style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold)
                     )),
 
@@ -118,6 +124,46 @@ class _RequestsState extends State<Requests> {
                               constraints: BoxConstraints.tightFor(width: 55),
                               child:ElevatedButton(
 
+                                style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.green) ),
+                                onPressed: () async {
+                                  final List<String>? s=await showMaterialCheckboxPicker<String>(items: [
+                                    'جبر',
+                                    'تفاضل',
+                                    'استاتيكا',
+                                    'ديناميكا'
+                                    'هندسة فراغية',
+                                  ], context: context,
+                                    title: 'أختر المواد',
+                                  );
+                                  if(s==null || s.length==0) {
+                                    showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return AlertDialog(
+                                          content: const Text(
+                                            'لم يتم تحديد مواد',
+                                            textAlign: TextAlign.right,),
+                                          actions: [
+                                            TextButton(
+                                              child: Text('حسنا'),
+                                              onPressed: () {
+                                                Navigator.of(context).pop();
+                                              },
+                                            ),
+                                          ],
+                                        );
+                                      },
+                                    );
+                                }else{
+                                    subjects=s;
+                                  }
+                                },
+                                child: Icon(Icons.book,color:Colors.white),
+                              ))),
+                          DataCell( ConstrainedBox(
+                              constraints: BoxConstraints.tightFor(width: 55),
+                              child:ElevatedButton(
+
                                 style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Color(0xff0369CD)) ),
                                 onPressed: () async {
                                   final DateTime? picked = await showDatePicker(
@@ -150,8 +196,29 @@ class _RequestsState extends State<Requests> {
                                   if (picked != null){
                                     List<String> now =picked.toString().split(' ');
 
-                                    _controlStudent.acceptStudent(s.id,now[0],startChosen);
-                                    _controlStudent.loadRequests();
+                                    if(subjects.length!=0){
+                                      _controlStudent.acceptStudent(s.id,now[0],startChosen,context,subjects);
+                                      _controlStudent.loadRequests();
+                                    }else{
+                                      showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return AlertDialog(
+                                            content: const Text(
+                                              'لم يتم تحديد مواد',
+                                              textAlign: TextAlign.right,),
+                                            actions: [
+                                              TextButton(
+                                                child: Text('حسنا'),
+                                                onPressed: () {
+                                                  Navigator.of(context).pop();
+                                                },
+                                              ),
+                                            ],
+                                          );
+                                        },
+                                      );
+                                    }
                                   }
                                 },
                                 child: Icon(Icons.add_circle_outline,color:Colors.white),

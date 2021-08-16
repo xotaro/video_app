@@ -23,6 +23,7 @@ class _AddingVideoState extends State<AddingVideo> {
     super.initState();
   }
   int _value=1;
+  int _sub=1;
   TextEditingController subjectNameController=TextEditingController();
   TextEditingController unitController=TextEditingController();
   TextEditingController lessonController=TextEditingController();
@@ -54,23 +55,35 @@ class _AddingVideoState extends State<AddingVideo> {
             children: [
                Padding(
                  padding: const EdgeInsets.only(top: 20),
-                 child: TextField(
-                  controller:subjectNameController ,
+                 child: DropdownButton(
 
-                  textAlign: TextAlign.right,
-                  style: TextStyle(fontSize: 16),
-                  decoration: InputDecoration(
-                      fillColor: Colors.grey,
-                      filled: true,
-                      //suffixIcon: Icon(Icons.email ,color: cBlue),
-                      suffixIcon: Icon(Icons.assignment_rounded,color: Colors.blue),
-                      contentPadding: EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 5.0),
+                   value: _sub,
+                   items: [
+                     DropdownMenuItem(
+                       child: Text("جبر"),
+                       value: 1,
+                     ),
+                     DropdownMenuItem(
+                       child: Text("استاتيكا"),
+                       value: 2,
+                     ),
+                     DropdownMenuItem(
+                       child: Text("ديناميكا"),
+                       value: 3,
+                     ),
+                     DropdownMenuItem(
+                       child: Text("هندسة فراغية"),
+                       value: 4,
+                     ),
 
-                      hintText: "اسم الماده",
-                      border:
-                      OutlineInputBorder(borderRadius: BorderRadius.circular(10.0) , borderSide: BorderSide.none)
-                  ),
-              ),
+                   ],
+
+                   onChanged: (x) {
+                     setState(() {
+                       _sub = x as int ;
+                     });
+                   },
+                 ),
                ),
               Padding(
                 padding: const EdgeInsets.only(top: 20),
@@ -138,12 +151,8 @@ class _AddingVideoState extends State<AddingVideo> {
           value: _value,
           items: [
             DropdownMenuItem(
-              child: Text("الصف الثاني الثانوي"),
-              value: 1,
-            ),
-            DropdownMenuItem(
               child: Text("الصف الثالث الثانوي"),
-              value: 2,
+              value: 1,
             )
           ],
 
@@ -167,7 +176,9 @@ class _AddingVideoState extends State<AddingVideo> {
                   minWidth: MediaQuery.of(context).size.width,
                   padding: EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 5.0),
                   onPressed: () {
-                    _addVideoViewModel.addNew(subjectNameController.text, unitController.text, lessonController.text,
+                    _addVideoViewModel.addNew(_sub==1?'جبر':_sub==2?"استاتيكا":
+                        _sub==3?"ديناميكا":"هندسة فراغية"
+                        , unitController.text, lessonController.text,
                         linkController.text,_value);
                   },
                   child: Text("اضافه فيديو",

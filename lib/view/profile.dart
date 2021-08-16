@@ -66,16 +66,31 @@ class _ProfileState extends State<Profile> {
                     Padding(padding: EdgeInsets.only(bottom: 18),
                         child: Row(
                           children: [
+                            Text('بدايه الاشتراك: ',style: TextStyle(color: Color(0xff0369CD),fontSize: 18),),
+                            Text(student.startDate,style: TextStyle(fontSize: 18),overflow: TextOverflow.ellipsis,)
+                          ],
+                        )
+                    ),
+                    Padding(padding: EdgeInsets.only(bottom: 18),
+                        child: Row(
+                          children: [
                             Text('نهايه الاشتراك: ',style: TextStyle(color: Color(0xff0369CD),fontSize: 18),),
                             Text(student.endDate,style: TextStyle(fontSize: 18),overflow: TextOverflow.ellipsis,)
                           ],
-                        )),
+                        )
+                    ),
                     Row(
                       children: [
                         Text('الصف: ',style: TextStyle(color: Color(0xff0369CD),fontSize: 18),),
                         Text(student.grade==1?'الصف الثاني الثانوي':'الصف الثالث الثانوي',style: TextStyle(fontSize: 18),)
                       ],
                     ),
+                     Row(
+                      children: [
+                        Text('المواد: ',style: TextStyle(color: Color(0xff0369CD),fontSize: 18),),
+                        Text(student.subjects.toString().replaceAll(']', '').replaceAll('[', ''),style: TextStyle(fontSize: 18),)
+                      ],
+                    )
 
 
                   ],

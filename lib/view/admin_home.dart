@@ -37,18 +37,12 @@ class _AdminHomeState extends State<AdminHome> {
             builder: (context, value, child) => Column(
               children: [
                 Padding(
-                  padding: EdgeInsets.only(right: 23,left: 23),
-                  child: RawMaterialButton(
-                    onPressed: () {},
-                    elevation: 2.0,
-                    fillColor: Colors.white,
-                    child: Icon(
-                      Icons.pending,
-                      color:Colors.blue ,
-                      size: 100.0,
+                  padding: EdgeInsets.only(right: 130,left: 130,bottom: 28),
+                  child: Hero(
+                    tag: 'logo',
+                    child: Image.asset(
+                        'assets/logo.png'
                     ),
-                    padding: EdgeInsets.all(15.0),
-                    shape: CircleBorder(),
                   )
                 ),
                 Padding(
@@ -59,7 +53,7 @@ class _AdminHomeState extends State<AdminHome> {
                     children: [
                       CustomInfoCard(0, 17, Icon(Icons.videocam_sharp, color: Color(0xff0369CD)), "عدد المقاطع:", '${_adminContentViewerViewModel.videoNumber}',11),
                       CustomInfoCard(0, 0, Icon(Icons.note_add_rounded, color: Color(0xff0369CD),), "طلبات التسجيل:", '${_adminContentViewerViewModel.inactive}',11),
-                      CustomInfoCard(17, 0, Icon(Icons.remove_red_eye, color: Color(0xff0369CD)),"الطلاب المسجلين:" , '${_adminContentViewerViewModel.active}',11)
+                      CustomInfoCard(17, 0, Icon(Icons.people, color: Color(0xff0369CD)),"الطلاب المسجلين:" , '${_adminContentViewerViewModel.active}',11)
                     ],
                   ),
                 ),

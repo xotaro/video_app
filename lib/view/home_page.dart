@@ -27,7 +27,7 @@ class _HomePageStudentState extends State<HomePageStudent> {
   _studentContentViewerViewModel=getIt<StudentContentViewerViewModel>();
   _profileViewModel.loadData();
   _profileViewModel.loaded.stream.listen((event) {
-    _studentContentViewerViewModel.loadAStudentContent(_profileViewModel.student.grade );
+    _studentContentViewerViewModel.loadAStudentContent(_profileViewModel.student.grade,_profileViewModel.student.subjects );
 
   });
   super.initState();
@@ -93,7 +93,7 @@ class _HomePageStudentState extends State<HomePageStudent> {
                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                mainAxisSize: MainAxisSize.max,
                                children: [
-                                 CustomInfoCard(0, 24, Icon(Icons.menu_book_outlined, color: Color(0xff0369CD),), "عدد المواد:", '${_studentContentViewerViewModel.subjects}',12),
+                                 CustomInfoCard(0, 24, Icon(Icons.menu_book_outlined, color: Color(0xff0369CD),), "عدد المواد:", '${_profileViewModel.student.subjects.length}',12),
                                  CustomInfoCard(0, 0, Icon(Icons.videocam_sharp, color: Color(0xff0369CD)), "عدد المقاطع:", '${_studentContentViewerViewModel.videoNumber}',12),
                                ],
                              ),

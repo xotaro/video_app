@@ -26,9 +26,9 @@ class ControlStudentViewModel extends ChangeNotifier{
     DbCollection watchedVideosCollection=_db.collection('st_vide');
     Map watched=(await watchedVideosCollection.findOne({'video':videoId,'student': studentId}))!;
     VideoStudent v = VideoStudent.fromJson(watched);
-    if(v.watched<3){
-      int neww=v.watched++;
-      watchedVideosCollection.updateOne({'video':videoId,'student':studentId}, modify.set('watched',v.watched++));
+    if(v.watched>0){
+      int neww=v.watched--;
+      watchedVideosCollection.updateOne({'video':videoId,'student':studentId}, modify.set('watched',neww));
     }
     notifyListeners();
   }
@@ -39,7 +39,7 @@ class ControlStudentViewModel extends ChangeNotifier{
 
     studentsCollection.deleteOne({
       '_id': id,}) ;
-    studentsCollection.deleteMany({
+    st_vide.deleteMany({
       'student': id,}) ;
     notifyListeners();
   }

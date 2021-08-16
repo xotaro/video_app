@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:video_app/di/di_config.dart';
 import 'package:video_app/di/mongo.dart';
 import 'package:video_app/view/home_navigate.dart';
@@ -24,6 +27,21 @@ class _SplashScreenState extends State<SplashScreen> {
       ));
 
 
+    });
+    _database.dbErrorSocket.stream.listen((event) {
+      Navigator.of(context).pushReplacement(MaterialPageRoute<void>(
+          builder: (context) => Scaffold(
+            body: Container(
+              color: Colors.white,
+              child: Center(
+                child: Text('خطأ في الاتصال'),
+              ),
+            ),
+          )
+      ));
+      Timer(Duration(seconds: 3), () {
+        SystemNavigator.pop();
+      });
     });
 
     // TODO: implement initState

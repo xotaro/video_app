@@ -228,7 +228,7 @@ class _RegistrationState extends State<Registration> {
                 });
 
                 _registerViewModel.registerNew(nameController.text, phoneController.text, parentController.text,
-                    emailController.text, passwordController.text,_value);
+                    emailController.text, passwordController.text,2,context);
               }
 
             },
@@ -349,12 +349,8 @@ class _RegistrationState extends State<Registration> {
                           value: _value,
                           items: [
                             DropdownMenuItem(
-                              child: Text("الصف الثاني الثانوي"),
-                              value: 1,
-                            ),
-                            DropdownMenuItem(
                               child: Text("الصف الثالث الثانوي"),
-                              value: 2,
+                              value: 1,
                             )
                           ],
 

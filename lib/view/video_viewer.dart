@@ -72,6 +72,8 @@ class _VideoAppState extends State<VideoApp> {
           player: YoutubePlayer(
            onEnded: (metaData) {
              Navigator.of(context).pop();
+             SystemChrome.setPreferredOrientations(DeviceOrientation.values);
+
            },
             onReady: () {
 

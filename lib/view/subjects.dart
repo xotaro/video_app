@@ -24,7 +24,7 @@ class _SubjectsState extends State<Subjects> {
     _loadVideosViewModel=getIt<LoadVideosViewModel>();
     _profileViewModel=getIt<ProfileViewModel>();
 
-    _loadVideosViewModel.loadStudentContent(_profileViewModel.student.grade,_profileViewModel.student.id);
+    _loadVideosViewModel.loadStudentContent(_profileViewModel.student.grade,_profileViewModel.student.subjects,_profileViewModel.student.id);
     super.initState();
   }
   @override

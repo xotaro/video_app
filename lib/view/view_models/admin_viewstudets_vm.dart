@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:mongo_dart/mongo_dart.dart';
 import 'package:video_app/di/mongo.dart';
@@ -33,7 +34,7 @@ class ControlStudent extends ChangeNotifier{
     onAdded.add('done');
     notifyListeners();
   }
-  acceptStudent(ObjectId id,String date,String startChosen){
+  acceptStudent(ObjectId id,String date,String startChosen,context,List<String> subjects){
     Db _db=_database.db;
     DbCollection studentsCollection=_db.collection('Students');
     studentsCollection.updateOne({
@@ -44,6 +45,8 @@ class ControlStudent extends ChangeNotifier{
       studentsCollection.updateOne({
         '_id': id,},modify.set('start_date', startChosen)) ;
     }
+    studentsCollection.updateOne({
+      '_id': id,},modify.set('subjects', subjects)) ;
     notifyListeners();
 
   }

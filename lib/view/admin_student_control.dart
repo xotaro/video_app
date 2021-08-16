@@ -97,6 +97,12 @@ class _ControlStudentPageState extends State<ControlStudentPage> {
                               Text(widget.student.grade==1?'الصف الثاني الثانوي':'الصف الثالث الثانوي',style: TextStyle(fontSize: 18),)
                             ],
                           ),
+                          Row(
+                            children: [
+                              Text('المواد: ',style: TextStyle(color: Color(0xff0369CD),fontSize: 18),),
+                              Text(widget.student.subjects.toString().replaceAll(']', '').replaceAll('[', ''),style: TextStyle(fontSize: 18),)
+                            ],
+                          ),
                           Padding(
                             padding: EdgeInsets.only(top: 10,left: 10),
                             child: Consumer<ControlStudentViewModel>(
@@ -114,6 +120,7 @@ class _ControlStudentPageState extends State<ControlStudentPage> {
                                             style: TextStyle(color: Color(0xff0369CD)),overflow: TextOverflow.ellipsis,),
                                           Text(''),
                                           Text(e.lessonName, style: TextStyle(color: Color(0xff0369CD),),overflow: TextOverflow.ellipsis),
+
                                           Text('عدد المشاهدات المتبقيه: ${e.watched}',
                                               style: TextStyle(color: Color(0xff0369CD),fontWeight: FontWeight.bold)),
                                           TextButton(onPressed: (){
