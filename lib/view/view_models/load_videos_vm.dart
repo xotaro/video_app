@@ -206,7 +206,7 @@ class LoadVideosViewModel extends ChangeNotifier{
 
       VideoStudent watched= VideoStudent.fromJson(studentVideo);
       int w=watched.watched;
-      if(w<=3){
+      if(w<5){
         w=w+1;
         studentVideoCollection.updateOne({'video':video.id,'student':studentId}, modify.set('watched',w));
         Navigator.push(

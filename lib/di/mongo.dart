@@ -19,6 +19,7 @@ class Database {
           dbReady.add('event');
     }).catchError((e){
       if(e.runtimeType.toString()=='SocketException'){
+        print(e);
         dbErrorSocket.add('e');
       }
     });

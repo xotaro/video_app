@@ -11,17 +11,22 @@ import 'package:connectivity/connectivity.dart';
 
 void main() async {
   configureDependencies();
-  runZonedGuarded(() {
     WidgetsFlutterBinding.ensureInitialized();
-    FlutterError.onError = (FlutterErrorDetails errorDetails) {
-      print("Will log here ${errorDetails.exception.toString()}");
-    };
-    runApp(MyApp());
+  // runZonedGuarded(() {
+  //   WidgetsFlutterBinding.ensureInitialized();
+  //   FlutterError.onError = (FlutterErrorDetails errorDetails) {
+  //     print("Will log here ${errorDetails.exception.toString()}");
+  //   };
+  //
+  // }, (error, stackTrace) {
+  //   print("For other catch ${error.toString()}");
+  // });
+  runApp(MyApp());
 
-  }, (error, stackTrace) {
-    print("For other catch ${error.toString()}");
-  });
 }
+
+
+
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -29,6 +34,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return  MaterialApp(
+        debugShowCheckedModeBanner: false,
+        debugShowMaterialGrid: false,
         home:  AppHome());
 
   }
@@ -71,6 +78,8 @@ class _AppHomeState extends State<AppHome> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+        debugShowCheckedModeBanner: false,
+        debugShowMaterialGrid: false,
         title: 'Flutter Demo',
         theme: ThemeData(
           // This is the theme of your application.

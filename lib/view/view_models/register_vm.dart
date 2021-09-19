@@ -4,6 +4,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:mongo_dart/mongo_dart.dart';
+import 'package:ntp/ntp.dart';
 import 'package:video_app/di/mongo.dart';
 
 @injectable
@@ -14,7 +15,8 @@ class RegisterViewModel{
   registerNew(String name,String phoneNumber,String parentNumber,String email,String password,int grade,context) async {
     Db _db=_database.db;
     DbCollection studentsCollection=_db.collection('Students');
-    List<String> now =DateTime.now().toString().split(' ');
+    DateTime startDate = await NTP.now();
+    List<String> now =startDate.toString().split(' ');
 
     studentsCollection.findOne({'email':email}).then((value){
       if(value!=null){
