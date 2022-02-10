@@ -1,5 +1,6 @@
 
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -8,23 +9,31 @@ import 'package:video_app/view/splash_screen.dart';
 import 'di/di_config.dart';
 import 'package:connectivity/connectivity.dart';
 
-
 void main() async {
+  // HttpOverrides.global = new MyHttpOverrides();
+
   configureDependencies();
     WidgetsFlutterBinding.ensureInitialized();
-  // runZonedGuarded(() {
-  //   WidgetsFlutterBinding.ensureInitialized();
-  //   FlutterError.onError = (FlutterErrorDetails errorDetails) {
-  //     print("Will log here ${errorDetails.exception.toString()}");
-  //   };
-  //
-  // }, (error, stackTrace) {
-  //   print("For other catch ${error.toString()}");
-  // });
+
+  runZonedGuarded(() {
+    WidgetsFlutterBinding.ensureInitialized();
+    FlutterError.onError = (FlutterErrorDetails errorDetails) {
+      print("Will log here ${errorDetails.exception.toString()}");
+    };
+    runApp(MyApp());
+  }, (error, stackTrace) {
+    print("For other catch ${error.toString()}");
+  });
   runApp(MyApp());
 
 }
-
+// class MyHttpOverrides extends HttpOverrides{
+//   @override
+//   HttpClient createHttpClient(SecurityContext? context){
+//     return super.createHttpClient(context)
+//       ..badCertificateCallback = (X509Certificate cert, String host, int port)=> true;
+//   }
+// }
 
 
 

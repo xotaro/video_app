@@ -11,6 +11,7 @@ class Database {
 
   Db db=new Db('');
   Database() {
+
     Db.create(
     'mongodb+srv://123456:12345699@cluster0.cd0ay.mongodb.net/Video_app?retryWrites=true&w=majority')
         .then((value) {
