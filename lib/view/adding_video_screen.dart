@@ -28,6 +28,8 @@ class _AddingVideoState extends State<AddingVideo> {
   TextEditingController unitController=TextEditingController();
   TextEditingController lessonController=TextEditingController();
   TextEditingController linkController=TextEditingController();
+  TextEditingController link2Controller=TextEditingController();
+
   @override
   Widget build(BuildContext context) {
 
@@ -74,6 +76,10 @@ class _AddingVideoState extends State<AddingVideo> {
                      DropdownMenuItem(
                        child: Text("هندسة فراغية"),
                        value: 4,
+                     ),
+                     DropdownMenuItem(
+                       child: Text("تفاضل"),
+                       value: 5,
                      ),
 
                    ],
@@ -139,7 +145,27 @@ class _AddingVideoState extends State<AddingVideo> {
                       suffixIcon: Icon(Icons.assignment_rounded,color: Colors.blue),
                       contentPadding: EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 5.0),
 
-                      hintText: "الفيديو",
+                      hintText: "الفيديو جوده مرتفعه",
+                      border:
+                      OutlineInputBorder(borderRadius: BorderRadius.circular(10.0) , borderSide: BorderSide.none)
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 20),
+                child: TextField(
+                  controller:link2Controller ,
+
+                  textAlign: TextAlign.right,
+                  style: TextStyle(fontSize: 16),
+                  decoration: InputDecoration(
+                      fillColor: Colors.grey,
+                      filled: true,
+                      //suffixIcon: Icon(Icons.email ,color: cBlue),
+                      suffixIcon: Icon(Icons.assignment_rounded,color: Colors.blue),
+                      contentPadding: EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 5.0),
+
+                      hintText: "الفيديو جوده منخفضه",
                       border:
                       OutlineInputBorder(borderRadius: BorderRadius.circular(10.0) , borderSide: BorderSide.none)
                   ),
@@ -177,9 +203,9 @@ class _AddingVideoState extends State<AddingVideo> {
                   padding: EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 5.0),
                   onPressed: () {
                     _addVideoViewModel.addNew(_sub==1?'جبر':_sub==2?"استاتيكا":
-                        _sub==3?"ديناميكا":"هندسة فراغية"
+                        _sub==3?"ديناميكا":_sub==4?"هندسة فراغية":"تفاضل"
                         , unitController.text, lessonController.text,
-                        linkController.text,_value);
+                        linkController.text,_value,link2Controller.text);
                   },
                   child: Text("اضافه فيديو",
                       textAlign: TextAlign.center,

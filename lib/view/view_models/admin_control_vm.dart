@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:mongo_dart/mongo_dart.dart';
 import 'package:video_app/di/mongo.dart';
@@ -27,8 +28,8 @@ class ControlStudentViewModel extends ChangeNotifier{
     Map watched=(await watchedVideosCollection.findOne({'video':videoId,'student': studentId}))!;
     VideoStudent v = VideoStudent.fromJson(watched);
     if(v.watched>0){
-      int neww=v.watched--;
-      watchedVideosCollection.updateOne({'video':videoId,'student':studentId}, modify.set('watched',neww));
+      watchedVideosCollection.updateOne({'video':videoId,'student':studentId}, modify.set('watched',v.watched-1));
+      loadWatchedVideos(studentId);
     }
     notifyListeners();
   }
@@ -42,5 +43,23 @@ class ControlStudentViewModel extends ChangeNotifier{
     st_vide.deleteMany({
       'student': id,}) ;
     notifyListeners();
+  }
+  updateStart(ObjectId id,String date){
+    Db _db=_database.db;
+    DbCollection studentsCollection=_db.collection('Students');
+    studentsCollection.updateOne({
+      '_id': id,},modify.set('start_date', date)) ;
+
+
+
+  }
+  updateEnd(ObjectId id,String date){
+    Db _db=_database.db;
+    DbCollection studentsCollection=_db.collection('Students');
+    studentsCollection.updateOne({
+      '_id': id,},modify.set('end_date', date)) ;
+
+
+
   }
 }

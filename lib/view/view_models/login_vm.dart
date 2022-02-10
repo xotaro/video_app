@@ -36,7 +36,7 @@ class LoginViewModel {
             prefs.setString('userData', user);
             onLogged.add('ee');
           }else{
-            studentsCollection.deleteOne({'_id':student.id});
+            // studentsCollection.deleteOne({'_id':student.id});
             onLoggedError.add('ee');
           }
         }else{

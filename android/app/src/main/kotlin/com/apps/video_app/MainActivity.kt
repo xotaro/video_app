@@ -1,4 +1,4 @@
-package com.example.video_app
+package com.apps.video_app
 import android.view.WindowManager.LayoutParams
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.embedding.android.FlutterActivity

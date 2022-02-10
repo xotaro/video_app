@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:video_app/di/di_config.dart';
 import 'package:video_app/view/admin_navigation.dart';
 import 'package:video_app/view/registration.dart';
@@ -51,9 +54,20 @@ class _LoginPageState extends State<LoginPage> {
       );
     });
     // TODO: implement initState
+    loadLogin();
     super.initState();
   }
+  loadLogin() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? userStr = prefs.getString('userData');
+    if (userStr!=null){
+    Map<dynamic, dynamic> userMap = jsonDecode(userStr) as Map<dynamic, dynamic>;
+    setState(() {
+      phoneController.text=userMap['email'];
+        passwordController.text=userMap['password'];
+    });    }
 
+  }
   TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 16.0);
   int _count = 0;
   bool isChecked = false;
