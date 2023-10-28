@@ -13,7 +13,7 @@ class Database {
   Database() {
 
     Db.create(
-    'mongodb+srv://123456:12345699@cluster0.cd0ay.mongodb.net/Video_app?retryWrites=true&w=majority')
+    'mongodb+srv:/')
         .then((value) {
           db=value;
           db.open();
